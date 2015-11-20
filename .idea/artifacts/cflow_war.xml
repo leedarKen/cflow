@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="cflow:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="workflow.war">
+      <element id="artifact" artifact-name="cflow:war exploded" />
+    </root>
+  </artifact>
+</component>
