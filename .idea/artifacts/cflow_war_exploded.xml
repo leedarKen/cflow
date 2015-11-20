@@ -38,10 +38,14 @@
           <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2.1" />
           <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.6" />
           <element id="library" level="project" name="Maven: net.sf.ezmorph:ezmorph:1.0.6" />
+          <element id="library" level="project" name="Maven: org.testng:testng:6.8.5" />
+          <element id="library" level="project" name="Maven: org.beanshell:bsh:2.0b4" />
+          <element id="library" level="project" name="Maven: com.beust:jcommander:1.27" />
+          <element id="library" level="project" name="Maven: org.yaml:snakeyaml:1.6" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="D:\workspace_ken\cflow\target/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/workflow/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="cflow/web/Web" />
     </root>
