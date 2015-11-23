@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 /**
  * Created by ken.kang on 2015/11/20.
  */
-@Service
+@Service("rmservice")
 public class RmServiceImpl implements Rmservice{
 
     //User接口

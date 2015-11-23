@@ -7,5 +7,5 @@ import com.csoft.resource.cflow.pojo.RmService;
  */
 public interface Rmservice {
 
-    RmService selectByPrimaryKey(Integer id);
+    public RmService selectByPrimaryKey(Integer id);
 }

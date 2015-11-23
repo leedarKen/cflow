@@ -4,5 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-
+    <typeAliases>
+        <typeAlias alias="RmService" type="com.csoft.resource.cflow.pojo.RmService"/>
+    </typeAliases>
+    <mappers>
+        <mapper resource="com/csoft/resource/cflow/mapper/RmServiceMapper.xml" />
+    </mappers>
 </configuration>
