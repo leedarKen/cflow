@@ -1,5 +1,6 @@
 package com.csoft.resource.cflow.module;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -12,6 +13,6 @@ public class Process {
     private String startUserRole ;
 
     private List<ProcessColumn> ProcessColumnList ;
-    private List<ProcessTask> processTasksList ;
+    private LinkedList<ProcessTask> processTasksList ;
 
 }
