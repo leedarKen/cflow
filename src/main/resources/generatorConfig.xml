@@ -14,9 +14,9 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://192.168.1.105/resource_dep_151104"
-                        userId="test"
-                        password="test">
+                        connectionURL="jdbc:mysql://localhost/cflow"
+                        userId="root"
+                        password="root">
         </jdbcConnection>
 
         <javaModelGenerator targetPackage="com.csoft.resource.cflow.pojo"
@@ -39,7 +39,22 @@
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
-        <table tableName="rm_service">
+        <table tableName="cf_history_instance_input_value">
+            <generatedKey column="id" sqlStatement="Mysql"/>
+        </table>
+        <table tableName="cf_history_instance_process">
+            <generatedKey column="id" sqlStatement="Mysql"/>
+        </table>
+        <table tableName="cf_history_instance_task">
+            <generatedKey column="id" sqlStatement="Mysql"/>
+        </table>
+        <table tableName="cf_instance_input_value">
+            <generatedKey column="id" sqlStatement="Mysql"/>
+        </table>
+        <table tableName="cf_instance_process">
+            <generatedKey column="id" sqlStatement="Mysql"/>
+        </table>
+        <table tableName="cf_instance_task">
             <generatedKey column="id" sqlStatement="Mysql"/>
         </table>
     </context>
