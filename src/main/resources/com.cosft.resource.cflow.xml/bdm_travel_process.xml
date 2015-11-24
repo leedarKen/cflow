@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process id="bdm_travel" name="BDM Travel Process" version="1.0" startUserRole="BDM"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="process.xsd">
+    <form>
+        <column id="TravelAmount" type="number" name="Travel Amount"/>
+        <column id="DepartureDate" type="date" name="Departure Date"/>
+        <column id="ReturnDate" type="date" name="Return Date"/>
+        <column id="Destination" type="String" name="Destination"/>
+        <column id="Reason" type="String" name="Reason"/>
+        <column id="outOfChina" type="String" name="Out Of China"/>
+    </form>
+
+    <tasks>
+        <task id="apply_travel" name="Apply Travel" action="input" type="begin">
+            <input>
+                <column id="TravelAmount" isRequire="true"/>
+                <column id="DepartureDate" isRequire="true"/>
+                <column id="ReturnDate" isRequire="true"/>
+                <column id="Destination" isRequire="true"/>
+                <column id="Reason" isRequire="true"/>
+                <column id="outOfChina" isRequire="true"/>
+            </input>
+            <rule>
+                <condition column="action" condition="success" type="equal">
+                    <toTask ref="bdm_leader_approve"/>
+                    <toRole toStrategy="creator" role="Fiance"/>
+                </condition>
+            </rule>
+        </task>
+        <task id="bdm_leader_approve" name="BDM Leader Approve" action="approve">
+            <rule>
+                <condition column="action" result="approve" type="equal">
+                   <!-- <condition column="TravelAmount" condition="4000" type="grater">
+                        <toTask ref="manager_approve"/>
+                        <toRole toStrategy="role" role="VP"/>
+                    </condition>-->
+                    <condition column="TravelAmount" condition="4000" type="smaller">
+                        <condition column="outOfChina" condition="Yes" type="equal">
+                            <toTask ref="manager_approve"/>
+                            <toRole toStrategy="role" role="VP"/>
+                        </condition>
+                        <condition column="outOfChina" condition="No" type="equal">
+                            <toTask ref="fiance_approve"/>
+                            <toRole toStrategy="role" role="Fiance"/>
+                        </condition>
+                    </condition>
+                </condition>
+                <condition column="action" result="reject" type="equal">
+                    <toTask ref="apply_travel"/>
+                    <toRole toStrategy="creator" role="Fiance"/>
+                </condition>
+            </rule>
+        </task>
+        <task id="manager_approve" name="Manager Approve" action="approve">
+            <rule>
+                <condition column="action" result="approve" type="equal">
+                    <toTask ref="admin_order"/>
+                    <toRole toStrategy="role" role="admin"/>
+                </condition>
+                <condition column="action" result="reject" type="equal">
+                    <toTask ref="apply_travel"/>
+                    <toRole toStrategy="creator" role="Fiance"/>
+                </condition>
+            </rule>
+        </task>
+        <task id="fiance_approve" name="Fiance Approve" action="approve">
+            <rule>
+                <condition column="action" result="approve" type="equal">
+                    <toTask ref="admin_order"/>
+                    <toRole toStrategy="role" role="admin"/>
+                </condition>
+                <condition column="action" result="reject" type="equal">
+                    <toTask ref="apply_travel"/>
+                    <toRole toStrategy="creator" role="Fiance"/>
+                </condition>
+            </rule>
+        </task>
+
+        <task id="admin_order" name="Admin Order" action="notice" type="end">
+            <rule>
+                <condition column="action" result="finish" type="equal">
+                    <toTask to="end"/>
+                </condition>
+                <condition column="action" result="cancel" type="equal">
+                    <toTask ref="apply_travel"/>
+                    <toRole toStrategy="creator" role="Fiance"/>
+                </condition>
+            </rule>
+        </task>
+    </tasks>
+
+</process>

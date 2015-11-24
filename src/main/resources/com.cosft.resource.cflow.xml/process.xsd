@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="process">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="form" type="formType" minOccurs="0"/>
+                <xs:element name="tasks" type="tasksType" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string"/>
+            <xs:attribute name="name" type="xs:string"/>
+            <xs:attribute name="version" type="xs:float"/>
+            <xs:attribute name="startUserRole" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="formType">
+        <xs:sequence>
+            <xs:element name="column" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:attribute name="id" type="xs:string"/>
+                    <xs:attribute name="type" type="xs:string"/>
+                    <xs:attribute name="name" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="tasksType">
+        <xs:sequence>
+            <xs:element name="task" type="taskType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="taskType">
+        <xs:sequence>
+            <xs:element name="input" type="inputType" maxOccurs="1" minOccurs="0"/>
+            <xs:element name="rule" type="ruleType" maxOccurs="1" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:string"/>
+        <xs:attribute name="name" type="xs:string"/>
+        <xs:attribute name="type" type="xs:string"/>
+        <xs:attribute name="action" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="inputType">
+        <xs:sequence>
+            <xs:element name="column" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:attribute name="id" type="xs:string"/>
+                    <xs:attribute name="isRequire" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+
+    </xs:complexType>
+    <xs:complexType name="ruleType">
+        <xs:sequence>
+            <xs:element name="condition" type="resultType" maxOccurs="unbounded" minOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="column" type="xs:string"/>
+        <xs:attribute name="result" type="xs:string"/>
+        <xs:attribute name="type" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="resultType">
+        <xs:sequence>
+            <xs:element name="toTask" minOccurs="1" type="toTaskType" />
+            <xs:element name="toRole" minOccurs="1" type="toRoleType" />
+        </xs:sequence>
+        <xs:attribute name="column" type="xs:string"/>
+        <xs:attribute name="result" type="xs:string"/>
+        <xs:attribute name="type" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="toTaskType">
+        <xs:sequence>
+            <xs:element name="toTask" minOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="ref" type="xs:string"/>
+        <xs:attribute name="to" type="xs:string"/>
+    </xs:complexType>
+
+    <xs:complexType name="toRoleType">
+        <xs:sequence>
+            <xs:element name="toRole" minOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="toStrategy" type="xs:string"/>
+        <xs:attribute name="role" type="xs:string"/>
+    </xs:complexType>
+</xs:schema>
