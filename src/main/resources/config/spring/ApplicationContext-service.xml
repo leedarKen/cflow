@@ -5,23 +5,34 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <!--扫描service-->
 
-    <import resource="ApplicationContext-dao.xml"/>
-    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
+    <aop:config>
+        <aop:advisor id="managerTx" advice-ref="txAdvice" pointcut="execution(* *..service.inner.entry.service.*Manager.*(..)) || execution(* *..service.inner.business.service.*Manager.*(..))" order="2"/>
+    </aop:config>
+    <!-- Enable @Transactional support -->
+    <tx:annotation-driven/>
 
-    <tx:advice id="txAdvice" transaction-manager="dataSourceTransactionManager">
+    <!-- Enable @AspectJ support -->
+    <aop:aspectj-autoproxy/>
+
+    <!-- Activates scanning of @Autowired -->
+    <context:annotation-config/>
+
+    <!-- Activates scanning of @Service -->
+    <context:component-scan base-package="com.csoft.resource.cflow.service"/>
+    <context:component-scan base-package="com.csoft.resource.cflow.service.inner.entry.service"/>
+    <context:component-scan base-package="com.csoft.resource.cflow.service.inner.business.service"/>
+
+    <tx:advice id="txAdvice">
         <tx:attributes>
-            <tx:method name="find*" propagation="REQUIRED"/>
-            <tx:method name="update*" propagation="REQUIRED"/>
-            <tx:method name="delete*" propagation="REQUIRED"/>
-            <tx:method name="add*" propagation="REQUIRED"/>
+            <!-- Read-only commented out to make things easier for end-users -->
+            <!-- http://issues.appfuse.org/browse/APF-556-->
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="sendMail*" read-only="true" propagation="NOT_SUPPORTED"/>
+            <tx:method name="*" rollback-for="Exception"/>
         </tx:attributes>
     </tx:advice>
 
-    <aop:config>
-        <aop:advisor advice-ref="txAdvice" pointcut="execution(* com.csoft.workflow.service.*.*(..))"/>
-    </aop:config>
+
 </beans>

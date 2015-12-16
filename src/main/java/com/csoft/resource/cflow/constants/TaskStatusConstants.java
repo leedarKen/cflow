@@ -30,13 +30,11 @@ public enum TaskStatusConstants implements Constant {
     };
 
     public static TaskStatusConstants constantByCode(Object code) {
-        TaskStatusConstants[] types = TaskStatusConstants.values();
-        for (int i = 0; i < types.length; i++) {
-            if (types[i].code().equals(code)) {
-                return types[i];
+        for(TaskStatusConstants type : TaskStatusConstants.values()){
+            if (type.code().equals(code)) {
+                return type;
             }
         }
-
         return null;
     }
 }

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process id="bdm_travel_pre-application_process" name="BDM Travel Process" version="1.0.0" startUserRole="BDM"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="process.xsd">
+    <processForm>
+        <column id="TravelAmount" type="Currency" name="Travel Amount"/>
+        <column id="outOfChina" type="String" name="Out Of China"/>
+    </processForm>
+
+    <taskList>
+        <task id="apply_travel" name="Apply Travel" action="Input" type="Begin">
+            <executor strategy="Role" value="BDM" />
+            <input>
+                <column id="TravelAmount" isRequire="true"/>
+                <column id="outOfChina" isRequire="true"/>
+            </input>
+            <submit>
+                <column id="action"/>
+            </submit>
+            <ruleList>
+                <rule>
+                    <condition>
+                        <column id="action" value="Success" valueType="Equal"/>
+                    </condition>
+                    <trigger ref="bdm_leader_approve"/>
+                </rule>
+            </ruleList>
+        </task>
+        <task id="bdm_leader_approve" name="BDM Leader Approve" action="Approve" type="Process">
+            <executor strategy="Leader" value=""/>
+            <submit>
+                <column id="action"/>
+                <column id="TravelAmount"/>
+                <column id="outOfChina"/>
+            </submit>
+            <ruleList>
+                <rule id="in_china_to_end">
+                    <condition>
+                        <column id="action" value="Approve" valueType="Equal"/>
+                        <column id="TravelAmount" value="4000" valueType="Smaller"/>
+                        <column id="outOfChina" value="False" valueType="Equal"/>
+                    </condition>
+                    <trigger ref="end"/>
+                </rule>
+               <rule id="out_china_to_manager">
+                   <condition>
+                       <column id="action" value="Approve" valueType="Equal"/>
+                       <column id="TravelAmount" value="4000" valueType="Smaller"/>
+                       <column id="outOfChina" value="True" valueType="Equal"/>
+                   </condition>
+                   <trigger ref="manager_approve"/>
+               </rule>
+               <rule id="greater_than_4000">
+                   <condition>
+                       <column id="action" value="Approve" valueType="Equal"/>
+                       <column id="TravelAmount" value="4000" valueType="Greater"/>
+                   </condition>
+                   <trigger ref="manager_approve"/>
+               </rule>
+               <rule id="reject">
+                <condition>
+                    <column id="action" value="Reject" valueType="Equal"/>
+                </condition>
+                <trigger  ref="apply_travel"/>
+            </rule>
+            </ruleList>
+        </task>
+        <task id="manager_approve" name="Manager Approve" action="Approve" type="Process">
+            <executor strategy="Constant" value="">
+                <user_id id="255" />
+                <user_id id="3383" />
+            </executor>
+            <submit>
+                <column id="action"/>
+            </submit>
+            <ruleList>
+                <rule>
+                    <condition>
+                        <column id="action" value="Approve" valueType="Equal"/>
+                    </condition>
+                    <trigger ref="admin_order"/>
+                </rule>
+                <rule>
+                    <condition>
+                        <column id="action" value="Reject" valueType="Equal"/>
+                    </condition>
+                    <trigger ref="apply_travel"/>
+                </rule>
+            </ruleList>
+        </task>
+    </taskList>
+</process>

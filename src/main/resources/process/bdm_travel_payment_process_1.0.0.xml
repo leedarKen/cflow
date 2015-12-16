@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process id="bdm_travel" name="BDM Travel Process" version="1.0.0" startUserRole="BDM"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="process.xsd">
+    <processForm>
+        <column id="TravelAmount" type="Currency" name="Travel Amount"/>
+    </processForm>
+    <taskList>
+        <task id="apply_travel_payment" name="Apply Travel Payment" action="Input" type="Begin">
+            <executor strategy="Role" value="BDM" />
+            <input>
+                <column id="TravelAmount"/>
+            </input>
+            <submit>
+                <column id="action"/>
+            </submit>
+            <ruleList>
+                <rule>
+                    <condition>
+                        <column id="action" value="success" valueType="Equal"/>
+                    </condition>
+                    <trigger ref="fiance_approve"/>
+                </rule>
+            </ruleList>
+        </task>
+        <task id="fiance_approve" name="Fiance Approve" action="Approve" type="Process">
+            <executor strategy="Role" value="Fiance Member" />
+            <submit>
+                <column id="action"/>
+            </submit>
+            <ruleList>
+                <rule>
+                    <condition>
+                        <column id="action" value="approve" valueType="Equal"/>
+                    </condition>
+                    <trigger ref="end"/>
+                </rule>
+                <rule>
+                    <condition>
+                        <column id="action" value="reject" valueType="Equal"/>
+                    </condition>
+                    <trigger ref="apply_travel_payment"/>
+                </rule>
+            </ruleList>
+        </task>
+
+    </taskList>
+</process>

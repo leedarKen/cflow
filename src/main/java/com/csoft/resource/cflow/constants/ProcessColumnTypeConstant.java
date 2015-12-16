@@ -1,16 +1,13 @@
 package com.csoft.resource.cflow.constants;
 
-/**
- * Created by ken.kang on 2015/11/24.
- */
 public enum ProcessColumnTypeConstant implements Constant{
-    Data {
+    Date {
         public Integer code() {
             return 11;
         }
 
         public String desc() {
-            return "Data";
+            return "Date";
         }
     },
     Number {
@@ -30,16 +27,41 @@ public enum ProcessColumnTypeConstant implements Constant{
         public String desc() {
             return "List";
         }
+    },
+    String {
+        public Integer code() {
+            return 14;
+        }
+
+        public String desc() {
+            return "String";
+        }
+    },
+    Currency{
+        public Integer code() {
+            return 15;
+        }
+
+        public String desc() {
+            return "Currency";
+        }
     };
 
     public static ProcessColumnTypeConstant constantByCode(Object code) {
-        ProcessColumnTypeConstant[] types = ProcessColumnTypeConstant.values();
-        for (int i = 0; i < types.length; i++) {
-            if (types[i].code().equals(code)) {
-                return types[i];
+        for (ProcessColumnTypeConstant processColumnTypeConstant :ProcessColumnTypeConstant.values()) {
+            if(processColumnTypeConstant.code().equals(code)){
+                return processColumnTypeConstant ;
             }
         }
+        return null;
+    }
 
+    public static ProcessColumnTypeConstant constantByCode(String desc) {
+        for (ProcessColumnTypeConstant processColumnTypeConstant :ProcessColumnTypeConstant.values()) {
+            if(processColumnTypeConstant.desc().equals(desc)){
+                return processColumnTypeConstant ;
+            }
+        }
         return null;
     }
 }

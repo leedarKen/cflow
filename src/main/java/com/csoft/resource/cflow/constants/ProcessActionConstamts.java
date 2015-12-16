@@ -1,8 +1,5 @@
 package com.csoft.resource.cflow.constants;
 
-/**
- * Created by ken.kang on 2015/11/24.
- */
 public enum ProcessActionConstamts implements Constant {
     Input {
         public Integer code() {
@@ -30,14 +27,20 @@ public enum ProcessActionConstamts implements Constant {
         }
     };
 
-    public static ProcessActionConstamts constantByCode(Object code) {
-        ProcessActionConstamts[] types = ProcessActionConstamts.values();
-        for (int i = 0; i < types.length; i++) {
-            if (types[i].code().equals(code)) {
-                return types[i];
+    public static ProcessActionConstamts  constantByCode(Integer code) {
+        for (ProcessActionConstamts processActionConstamts :ProcessActionConstamts.values()) {
+            if(processActionConstamts.code().equals(code)){
+                return processActionConstamts ;
             }
         }
-
+        return null;
+    }
+    public static ProcessActionConstamts constantByCode(String desc) {
+        for (ProcessActionConstamts processActionConstamts :ProcessActionConstamts.values()) {
+            if(processActionConstamts.desc().equals(desc)){
+                return processActionConstamts ;
+            }
+        }
         return null;
     }
 }
