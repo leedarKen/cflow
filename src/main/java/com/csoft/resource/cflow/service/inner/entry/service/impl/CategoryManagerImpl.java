@@ -6,6 +6,9 @@ import com.csoft.resource.cflow.service.inner.entry.service.CategoryManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Service("categoryManager")
 public class CategoryManagerImpl
@@ -23,11 +26,18 @@ public class CategoryManagerImpl
 
     @Override
     public Category getCategory(String category, String type, String detailType) {
-       return categoryDao.getCategory(category, type, detailType) ;
+        Map<String,String> parameters = new HashMap<String, String>() ;
+        parameters.put("category", category) ;
+        parameters.put("type", type) ;
+        parameters.put("detailType", detailType) ;
+       return categoryDao.getCategory(parameters) ;
     }
 
     @Override
     public Category getCategory(String category, String type) {
-        return categoryDao.getCategory(category, type) ;
+        Map<String,String> parameters = new HashMap<String, String>() ;
+        parameters.put("category", category) ;
+        parameters.put("type", type) ;
+        return categoryDao.getCategory(parameters) ;
     }
 }
