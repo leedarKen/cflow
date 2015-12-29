@@ -1,17 +1,26 @@
 package com.csoft.resource.cflow.service.impl;
 
 import com.csoft.resource.cflow.config.ProcessKeyInfo;
+import com.csoft.resource.cflow.context.SpringContextUtil;
 import com.csoft.resource.cflow.service.ProcessInstance;
 import com.csoft.resource.cflow.service.inner.business.service.ProcessInstanceInnerManager;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("processInstance")
+
 public class ProcessInstanceImpl implements ProcessInstance {
 
-	@Autowired
 	private ProcessInstanceInnerManager processInstanceInnerManager;
+
+	public ProcessInstanceInnerManager getProcessInstanceInnerManager() {
+		return processInstanceInnerManager;
+	}
+
+	public void setProcessInstanceInnerManager(ProcessInstanceInnerManager processInstanceInnerManager) {
+		this.processInstanceInnerManager = processInstanceInnerManager;
+	}
+
 	/**
 	 * start one process, return process instance's id
 	 * after execute success, engine will be calculate next executor, but the first task's user is the creator,
@@ -35,15 +44,20 @@ public class ProcessInstanceImpl implements ProcessInstance {
 	 * }
 	 */
 	@Override
-	public String startProcess(String processDefinitionKeyInbfo, String data) throws Exception {
+	public String startProcess(String processDefinitionKeyInbfo, String data) {
 
 		JSONObject jsonObj = JSONObject.fromObject(processDefinitionKeyInbfo) ;
 		String id = jsonObj.getString("processId") ;
 		String version = jsonObj.getString("processVersion") ;
 
 		ProcessKeyInfo keyInfo = new ProcessKeyInfo(id, version) ;
-
-		return processInstanceInnerManager.startProcess(keyInfo,data);
+		try {
+			//ProcessInstanceInnerManager processInstanceInnerManager = (ProcessInstanceInnerManager)SpringContextUtil.getBean("processInstanceInnerManager") ;
+			return processInstanceInnerManager.startProcess(keyInfo,data);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null ;
 	}
 
 	/**
@@ -58,7 +72,6 @@ public class ProcessInstanceImpl implements ProcessInstance {
 	 *
 	 *
 	 * @param processInstanceId
-	 * @param taskId
 	 * @param jsonValue
 	 * {
 	 *     taskId:  taskId,
@@ -80,9 +93,13 @@ public class ProcessInstanceImpl implements ProcessInstance {
 	 *  }
 	 */
 	@Override
-	public String executeTask(Integer processInstanceId, String taskId, String jsonValue) throws Exception{
-		String startProcessInfo = processInstanceInnerManager.executeTask(processInstanceId, jsonValue );
-		return null;
+	public String executeTask(Integer processInstanceId, String jsonValue) {
+		try {
+			return processInstanceInnerManager.executeTask(processInstanceId, jsonValue );
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null ;
 	}
 
 	@Override
@@ -100,11 +117,25 @@ public class ProcessInstanceImpl implements ProcessInstance {
 		return null;
 	}
 
-	public ProcessInstanceInnerManager getProcessInstanceInnerManager() {
-		return processInstanceInnerManager;
+
+	/**
+	 * get the task's execte information by process instance id and task id.
+	 * @param instanceProcessId process instance id
+	 * @param taskId task id
+	 * @return task info
+	 * {
+	 *     taskId: taskId,
+	 *     taskName: taskName,
+	 *     createTime: 12/05/2015 10:23:22,
+	 *     createUser : 5222,
+	 *     executeResult: Approve,
+	 *
+	 * }
+	 * @throws Exception
+	 */
+	@Override
+	public String getTaskInfo(String instanceProcessId, String taskId) throws Exception {
+		return processInstanceInnerManager.getTaskInfo(instanceProcessId, taskId);
 	}
 
-	public void setProcessInstanceInnerManager(ProcessInstanceInnerManager processInstanceInnerManager) {
-		this.processInstanceInnerManager = processInstanceInnerManager;
-	}
 }

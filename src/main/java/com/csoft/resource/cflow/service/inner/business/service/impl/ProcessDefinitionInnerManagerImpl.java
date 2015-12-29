@@ -7,7 +7,7 @@ import com.csoft.resource.cflow.context.ProcessContextFactory;
 import com.csoft.resource.cflow.service.inner.business.service.ProcessDefinitionInnerManager;
 import org.springframework.stereotype.Service;
 
-@Service("processDefinitionInnerService")
+@Service("processDefinitionInnerManager")
 public class ProcessDefinitionInnerManagerImpl implements ProcessDefinitionInnerManager {
 
 	private ProcessContext context = ProcessContextFactory.getProcessContext() ;

@@ -1,7 +1,6 @@
 package com.csoft.resource.cflow.service.inner.entry.service.impl;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;

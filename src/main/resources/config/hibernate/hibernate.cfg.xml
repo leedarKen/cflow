@@ -6,6 +6,8 @@
 
 <hibernate-configuration>
 	<session-factory>
+		<property name="connection.url">jdbc:mysql://localhost:3306/cflow</property>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
 		<mapping class="com.csoft.resource.cflow.pojo.HistoryInstanceInputValue"/>
 		<mapping class="com.csoft.resource.cflow.pojo.HistoryInstanceProcess"/>
 		<mapping class="com.csoft.resource.cflow.pojo.HistoryInstanceTask"/>
@@ -13,6 +15,7 @@
 		<mapping class="com.csoft.resource.cflow.pojo.InstanceProcess"/>
 		<mapping class="com.csoft.resource.cflow.pojo.InstanceProcessNextUserMap"/>
 		<mapping class="com.csoft.resource.cflow.pojo.InstanceTask"/>
+		<mapping class="com.csoft.resource.cflow.pojo.Category"/>
 	</session-factory>
 </hibernate-configuration>
 

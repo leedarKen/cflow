@@ -21,14 +21,14 @@
             <ruleList>
                 <rule>
                     <condition>
-                        <column id="action" value="Success" valueType="Equal"/>
+                        <column id="action" value="Success" valueCondition="Equal"/>
                     </condition>
                     <trigger ref="bdm_leader_approve"/>
                 </rule>
             </ruleList>
         </task>
         <task id="bdm_leader_approve" name="BDM Leader Approve" action="Approve" type="Process">
-            <executor strategy="Leader" value=""/>
+            <executor strategy="Leader" value="301"/>
             <submit>
                 <column id="action"/>
                 <column id="TravelAmount"/>
@@ -37,39 +37,37 @@
             <ruleList>
                 <rule id="in_china_to_end">
                     <condition>
-                        <column id="action" value="Approve" valueType="Equal"/>
-                        <column id="TravelAmount" value="4000" valueType="Smaller"/>
-                        <column id="outOfChina" value="False" valueType="Equal"/>
+                        <column id="action" value="Approve" valueCondition="Equal"/>
+                        <column id="TravelAmount" value="FromDataBase" valueCondition="Smaller"/>
+                        <column id="outOfChina" value="False" valueCondition="Equal"/>
                     </condition>
                     <trigger ref="end"/>
                 </rule>
                <rule id="out_china_to_manager">
                    <condition>
-                       <column id="action" value="Approve" valueType="Equal"/>
-                       <column id="TravelAmount" value="4000" valueType="Smaller"/>
-                       <column id="outOfChina" value="True" valueType="Equal"/>
+                       <column id="action" value="Approve" valueCondition="Equal"/>
+                       <column id="TravelAmount" value="FromDataBase" valueCondition="Smaller"/>
+                       <column id="outOfChina" value="True" valueCondition="Equal"/>
                    </condition>
                    <trigger ref="manager_approve"/>
                </rule>
                <rule id="greater_than_4000">
                    <condition>
-                       <column id="action" value="Approve" valueType="Equal"/>
-                       <column id="TravelAmount" value="4000" valueType="Greater"/>
+                       <column id="action" value="Approve" valueCondition="Equal"/>
+                       <column id="TravelAmount" value="FromDataBase" valueCondition="Greater"/>
                    </condition>
                    <trigger ref="manager_approve"/>
                </rule>
                <rule id="reject">
                 <condition>
-                    <column id="action" value="Reject" valueType="Equal"/>
+                    <column id="action" value="Reject" valueCondition="Equal"/>
                 </condition>
                 <trigger  ref="apply_travel"/>
             </rule>
             </ruleList>
         </task>
         <task id="manager_approve" name="Manager Approve" action="Approve" type="Process">
-            <executor strategy="Constant" value="">
-                <user_id id="255" />
-                <user_id id="3383" />
+            <executor strategy="Others" value="ByTravelAmount">
             </executor>
             <submit>
                 <column id="action"/>
@@ -77,13 +75,13 @@
             <ruleList>
                 <rule>
                     <condition>
-                        <column id="action" value="Approve" valueType="Equal"/>
+                        <column id="action" value="Approve" valueCondition="Equal"/>
                     </condition>
                     <trigger ref="end"/>
                 </rule>
                 <rule>
                     <condition>
-                        <column id="action" value="Reject" valueType="Equal"/>
+                        <column id="action" value="Reject" valueCondition="Equal"/>
                     </condition>
                     <trigger ref="apply_travel"/>
                 </rule>

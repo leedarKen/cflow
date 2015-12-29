@@ -23,135 +23,6 @@ public class ProcessTaskList {
 	private ProcessTask endTask ;
 	private ProcessTask nextTask ;
 
-	/**
-	 *
-	 * @param jsonData
-	 * {
-	 *      id(action):value(approve)
-	 *      id(TravelAmount):value(4000)
-	 *      id(Currency):Rmb
-	 * }
-	 *
-	 * @return
-	 */
-	//TODO implement
-	public ProcessTask getNextTask(ProcessTask task, String jsonData) throws Exception{
-
-		JSONObject jsonObject = JSONObject.fromObject(jsonData) ;
-
-		if(this.getProcessTaskMap() == null || this.getProcessTaskMap().isEmpty())
-			return null ;
-
-		ProcessRuleList ruleList = task.getRuleList() ;
-		if(ruleList == null)
-			throw new ProcessException("Rule List is empty, please check the rule configure.") ;
-
-
-		Map<String, ProcessRule> rules = task.getRuleList().getRules() ;
-		for(Map.Entry<String,ProcessRule> entry : rules.entrySet()){
-			TaskCondition taskCondition = entry.getValue().getTaskCondition() ;
-			Map<String, ProcessColumn> processColumnMap = taskCondition.getProcessColumnMap() ;
-			boolean isPass = false ;
-			for(Map.Entry<String, ProcessColumn> columnEntry : processColumnMap.entrySet()){
-				String id = columnEntry.getValue().getId() ;
-				String configValue = columnEntry.getValue().getValue() ;
-				ProcessColumnTypeConstant columnTypeConstant = columnEntry.getValue().getColumnTypeConstant() ;
-				ColumnValueTypeConstant columnValueTypeConstant = columnEntry.getValue().getColumnValueTypeConstant() ;
-
-				//judge the column whether exist in json object. if not exist, will continue;
-				if(!jsonObject.containsKey(id))
-					continue;
-
-				String resultValue = jsonObject.getString(id) ;
-				if(configValue.equals("Success")){
-					if(configValue.equalsIgnoreCase(resultValue)){
-						isPass = true ;
-						continue;
-					}else{
-						break ;
-					}
-				}
-				if(columnTypeConstant == ProcessColumnTypeConstant.Date){
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:MM:ss") ;
-					Date resultValueDate = null ;
-					Date configeValueDate = null ;
-					try {
-						resultValueDate = sdf.parse(resultValue) ;
-						configeValueDate = sdf.parse(configValue) ;
-					} catch (ParseException e) {
-						e.printStackTrace();
-					}
-
-					if(columnValueTypeConstant == ColumnValueTypeConstant.Equal){
-						if(resultValueDate.compareTo(configeValueDate) == 0){
-							isPass = true ;
-						}
-					}
-					if(columnValueTypeConstant == ColumnValueTypeConstant.Greater){
-						if(resultValueDate.compareTo(configeValueDate) > 0){
-							isPass = true ;
-						}
-					}
-					if(columnValueTypeConstant == ColumnValueTypeConstant.Smaller){
-						if(resultValueDate.compareTo(configeValueDate) < 0){
-							isPass = true ;
-						}
-					}
-				}
-				if(columnTypeConstant == ProcessColumnTypeConstant.String){
-					if(columnValueTypeConstant == ColumnValueTypeConstant.Equal){
-						if(resultValue.compareTo(configValue) == 0){
-							isPass = true ;
-						}
-					}
-					if(columnValueTypeConstant == ColumnValueTypeConstant.Greater){
-						if(resultValue.compareTo(configValue) > 0){
-							isPass = true ;
-						}
-					}
-					if(columnValueTypeConstant == ColumnValueTypeConstant.Smaller){
-						if(resultValue.compareTo(configValue) < 0){
-							isPass = true ;
-						}
-					}
-				}
-				if(columnTypeConstant == ProcessColumnTypeConstant.Number){
-					int resultValueInt = Integer.parseInt(resultValue) ;
-					int configValueInt = Integer.parseInt(configValue) ;
-
-					if(columnValueTypeConstant == ColumnValueTypeConstant.Equal){
-						if(resultValueInt == configValueInt ){
-							isPass = true ;
-						}
-					}
-					if(columnValueTypeConstant == ColumnValueTypeConstant.Greater){
-						if(resultValueInt > configValueInt){
-							isPass = true ;
-						}
-					}
-					if(columnValueTypeConstant == ColumnValueTypeConstant.Smaller){
-						if(resultValueInt < configValueInt){
-							isPass = true ;
-						}
-					}
-				}
-				//TODO CURRENCY
-
-			}
-
-			if(isPass == true){
-				TaskTrigger trigger = entry.getValue().getTaskTrigger() ;
-				if(trigger.getProcessTask().equalsIgnoreCase("end")){
-					return null ;
-				}else{
-					return this.getTask(trigger.getProcessTask()) ;
-				}
-			}
-		}
-		return null ;
-	}
-
-
 
 	public ProcessTask getBeninTask(){
 		if(beginTask == null){
@@ -159,7 +30,6 @@ public class ProcessTaskList {
 		}
 		return beginTask ;
 	}
-
 
 	public ProcessTask getEndTask(){
 		if(endTask == null){
@@ -179,17 +49,7 @@ public class ProcessTaskList {
 		}
 		return null ;
 	}
-	public ProcessTask getTask(String taskId){
-		if(this.getProcessTaskMap() == null || this.getProcessTaskMap().isEmpty())
-			return null ;
 
-		for(Map.Entry<String, ProcessTask> entry: this.getProcessTaskMap().entrySet()){
-			if(entry.getValue().getId().equals(taskId)){
-				return entry.getValue() ;
-			}
-		}
-		return null ;
-	}
 	static ProcessTaskList parse(Element element) throws SAXException{
 		ProcessTaskList processTaskList = new ProcessTaskList() ;
 		Map<String, ProcessTask> processTaskMap = new TreeMap<String, ProcessTask>() ;

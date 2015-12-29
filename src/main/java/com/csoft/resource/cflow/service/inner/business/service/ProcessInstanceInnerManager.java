@@ -1,6 +1,9 @@
 package com.csoft.resource.cflow.service.inner.business.service;
 
+import com.csoft.resource.cflow.config.Process;
 import com.csoft.resource.cflow.config.ProcessKeyInfo;
+import com.csoft.resource.cflow.config.ProcessTask;
+import org.springframework.context.ApplicationContext;
 
 public interface ProcessInstanceInnerManager {
 
@@ -65,4 +68,38 @@ public interface ProcessInstanceInnerManager {
 	 *  }
 	 */
 	String executeTask(Integer processInstanceId, String jsonValue) throws Exception;
+
+	/**
+	 * get the task's execte information by process instance id and task id.
+	 * @param instanceProcessId process instance id
+	 * @param taskId task id
+	 * @return task info
+	 * {
+	 *     taskId: taskId,
+	 *     taskName: taskName,
+	 *     createTime: 12/05/2015 10:23:22,
+	 *     createUser : 5222,
+	 *     executeResult: Approve,
+	 *
+	 * }
+	 * @throws Exception
+	 */
+	String getTaskInfo(String instanceProcessId, String taskId) ;
+
+	/**
+	 *
+	 * @param jsonData
+	 * {
+	 *      id(action):value(approve)
+	 *      id(TravelAmount):value(4000)
+	 *      id(Currency):Rmb
+	 * }
+	 *
+	 * @return
+	 */
+	public ProcessTask getNextTask(Process process, ProcessTask task, String jsonData)throws Exception ;
+
+	void setApplicationContext(ApplicationContext context);
+
+	//public void setApplicationContext(ApplicationContext context) ;
 }

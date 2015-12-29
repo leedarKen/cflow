@@ -6,11 +6,12 @@ import com.csoft.resource.cflow.service.inner.entry.service.InstanceProcessNextU
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("instanceProcessNextUserMapManager")
 public class InstanceProcessNextUserMapManagerImpl
 		extends GenericManagerImpl<InstanceProcessNextUserMap,Integer>
 		implements InstanceProcessNextUserMapManager {
 
+	@Autowired
 	private InstanceProcessNextUserMapDao instanceProcessNextUserMapDao ;
 
 	@Autowired

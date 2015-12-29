@@ -5,6 +5,7 @@
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
+    <type id="Spring" />
   </component>
   <component name="IdProvider" IDEtalkID="CE8F8FCDD7BF2557D90364382E902AC4" />
   <component name="MavenProjectsManager">

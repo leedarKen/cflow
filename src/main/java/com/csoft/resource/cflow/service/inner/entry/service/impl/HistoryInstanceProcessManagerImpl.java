@@ -6,11 +6,12 @@ import com.csoft.resource.cflow.service.inner.entry.service.HistoryInstanceProce
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("historyInstanceProcessManager")
 public class HistoryInstanceProcessManagerImpl
 		extends GenericManagerImpl<HistoryInstanceProcess,Integer>
 		implements HistoryInstanceProcessManager {
 
+	@Autowired
 	private HistoryInstanceProcessDao historyInstanceProcessDao ;
 
 	@Autowired

@@ -6,13 +6,15 @@ import com.csoft.resource.cflow.service.inner.entry.service.HistoryInstanceInput
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class HistoryInstanceInputValueManagerImpl extends  GenericManagerImpl<HistoryInstanceInputValue,Integer> implements HistoryInstanceInputValueManager {
-	private HistoryInstanceInputValueDao historyInstanceInputValueDao ;
+@Service("historyInstanceInputValueManager")
+public class HistoryInstanceInputValueManagerImpl extends GenericManagerImpl<HistoryInstanceInputValue, Integer> implements HistoryInstanceInputValueManager {
 
-	@Autowired
-	public HistoryInstanceInputValueManagerImpl(HistoryInstanceInputValueDao historyInstanceInputValueDao) {
-		super(historyInstanceInputValueDao);
-		this.historyInstanceInputValueDao = historyInstanceInputValueDao;
-	}
+    @Autowired
+    private HistoryInstanceInputValueDao historyInstanceInputValueDao;
+
+    @Autowired
+    public HistoryInstanceInputValueManagerImpl(HistoryInstanceInputValueDao historyInstanceInputValueDao) {
+        super(historyInstanceInputValueDao);
+        this.historyInstanceInputValueDao = historyInstanceInputValueDao;
+    }
 }

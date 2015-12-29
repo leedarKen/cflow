@@ -8,7 +8,7 @@ import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("processDefinition")
+@Service
 public class ProcessDefinitionImpl implements ProcessDefinition {
 
 	@Autowired

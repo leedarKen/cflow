@@ -19,7 +19,7 @@
       </profile>
       <profile default="false" name="Annotation profile for cflow" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="cflow" />
@@ -27,6 +27,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="cflow" target="1.6" />
+      <module name="workflow" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

@@ -18,7 +18,7 @@
             <ruleList>
                 <rule>
                     <condition>
-                        <column id="action" value="success" valueType="Equal"/>
+                        <column id="action" value="success" valueCondition="Equal"/>
                     </condition>
                     <trigger ref="fiance_approve"/>
                 </rule>
@@ -32,13 +32,13 @@
             <ruleList>
                 <rule>
                     <condition>
-                        <column id="action" value="approve" valueType="Equal"/>
+                        <column id="action" value="approve" valueCondition="Equal"/>
                     </condition>
                     <trigger ref="end"/>
                 </rule>
                 <rule>
                     <condition>
-                        <column id="action" value="reject" valueType="Equal"/>
+                        <column id="action" value="reject" valueCondition="Equal"/>
                     </condition>
                     <trigger ref="apply_travel_payment"/>
                 </rule>

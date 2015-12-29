@@ -19,7 +19,7 @@ public interface ProcessInstance {
      *     startUser:   startUserId,
      *     startDate:   startDate,
      *     executeResult:{success|approve|reject|finish},
-     *     inputDate:   [
+     *     inputData:   [
      *         {columnId:TravelAmount, columnValue:1000},
      *     ]
      * }
@@ -53,7 +53,7 @@ public interface ProcessInstance {
      *     createTime:   createTime,
      *     createUser:  createUser,
      *     executeResult:{success|approve|reject|finish},
-     *     inputDate:   [
+     *     inputData:   [
      *         {columnId:TravelAmount, columnValue:1000},
      *     ]
      * }
@@ -67,7 +67,7 @@ public interface ProcessInstance {
      *      nextExecutor:   nextExecutor
      *  }
      */
-    String executeTask(Integer processInstanceId, String taskId, String jsonValue) throws Exception;
+    String executeTask(Integer processInstanceId, String jsonValue) throws Exception;
 
     /**
      * cancel task, return previous task's info
@@ -119,4 +119,20 @@ public interface ProcessInstance {
      */
     String changeProcessToNextVersion(String currentProcessInstanceId, String newVersionProcessKeyInfo) ;
 
+	/**
+     * get the task's execte information by process instance id and task id.
+     * @param instanceProcessId process instance id
+     * @param TaskId task id
+     * @return task info
+     * {
+     *     taskId: taskId,
+     *     taskName: taskName,
+     *     createTime: 12/05/2015 10:23:22,
+     *     createUser : 5222,
+     *     executeResult: Approve,
+     *
+     * }
+     * @throws Exception
+     */
+    String getTaskInfo(String instanceProcessId, String TaskId) throws Exception;
 }

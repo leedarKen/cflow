@@ -4,7 +4,7 @@ import com.csoft.resource.cflow.dao.InstanceProcessDao;
 import com.csoft.resource.cflow.pojo.InstanceProcess;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository("instanceProcessDao")
 public class InstanceProcessDaoHibernate
 		extends GenericDaoHibernate<InstanceProcess,Integer>
 		implements InstanceProcessDao {

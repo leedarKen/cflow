@@ -4,7 +4,7 @@ import com.csoft.resource.cflow.dao.HistoryInstanceInputValueDao;
 import com.csoft.resource.cflow.pojo.HistoryInstanceInputValue;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository("historyInstanceInputValueDao")
 public class HistoryInstanceInputValueDaoHibernate
 		extends GenericDaoHibernate<HistoryInstanceInputValue,Integer>
 		implements HistoryInstanceInputValueDao {

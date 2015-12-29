@@ -8,7 +8,13 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
+            <!--
+            classpath:config/spring/aop-*.xml-->
             classpath:config/spring/applicationContext-*.xml
+            classpath:config/spring/app-config.xml
+            classpath:config/spring/search-client-config.xml
+            classpath:config/spring/search-service-config.xml
+            <!--classpath:config/spring/*.xml-->
         </param-value>
 
     </context-param>
@@ -33,19 +39,47 @@
     </filter-mapping>
 
     <!--springmvc前端控制器配置-->
-    <servlet>
+    <!--<servlet>
         <servlet-name>dispatcherServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
+       &lt;!&ndash; <init-param>
             <param-name>contextConfigLocation</param-name>
             <param-value>classpath*:config/spring/springmvc.xml</param-value>
-        </init-param>
+        </init-param>&ndash;&gt;
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
         <url-pattern>/</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
 
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>
+            org.springframework.web.servlet.DispatcherServlet
+        </servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath*:/spring/*.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>FirstServlet</servlet-name>
+        <servlet-class>com.csoft.resource.cflow.control.FirstServlet</servlet-class>
+    </servlet>
+    <!-- 想看jsp页面时注掉此处 -->
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/hessian/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>FirstServlet</servlet-name>
+        <url-pattern>/index.jsp</url-pattern>
+    </servlet-mapping>
 </web-app>

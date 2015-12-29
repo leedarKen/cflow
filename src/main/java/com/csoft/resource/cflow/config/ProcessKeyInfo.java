@@ -1,6 +1,9 @@
 package com.csoft.resource.cflow.config;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 public class ProcessKeyInfo {
 	private String id ;
 	private String version ;

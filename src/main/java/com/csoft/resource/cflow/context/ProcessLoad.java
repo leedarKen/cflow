@@ -10,7 +10,7 @@ import java.io.FilenameFilter;
 
 public class ProcessLoad {
 
-	public final static String PROCESS_CONFIG_PATH = Package.class.getResource("/process/").getPath() ;
+	public final static String PROCESS_CONFIG_PATH = ProcessLoad.class.getResource("/process/").getPath() ;
 
 	public static Process load(ProcessKeyInfo processKeyInfo){
 		String fileName = processKeyInfo.getId() + "_" + processKeyInfo.getVersion() + ".xml" ;

@@ -16,15 +16,15 @@ import static org.junit.Assert.*;
 public class ProcessInstanceInnerManagerImplTest {
 	@Autowired
 	private ProcessInstanceInnerManager processInstanceInnerManager;
-
+	ApplicationContext context ;
 	@Before
 	public void setUp() throws Exception {
-		ApplicationContext context = new ClassPathXmlApplicationContext(
+		context = new ClassPathXmlApplicationContext(
 				new String[]{"classpath:config/spring/ApplicationContext-dao.xml" ,
 						"classpath:config/spring/ApplicationContext-service.xml" ,
 						"classpath:config/hibernate/hibernate.cfg.xml"});
 		System.out.println("===========================================================================") ;
-		processInstanceInnerManager = (ProcessInstanceInnerManager)context.getBean("processInstanceInnerService") ;
+		processInstanceInnerManager = (ProcessInstanceInnerManager)context.getBean("processInstanceInnerManager") ;
 	}
 
 	@Test
@@ -49,8 +49,9 @@ public class ProcessInstanceInnerManagerImplTest {
 		JSONArray jsonArray = new JSONArray() ;
 		JSONObject columnJSON = new JSONObject() ;
 		columnJSON.put("columnId","TravelAmount") ;
-		columnJSON.put("columnValue","4000") ;
-		columnJSON.put("columnType","RMB") ;
+		columnJSON.put("columnValue","3500") ;
+		columnJSON.put("columnType","Currency") ;
+		columnJSON.put("CurrencyType","3") ;
 		jsonArray.add(columnJSON);
 		columnJSON = new JSONObject() ;
 		columnJSON.put("columnId","outOfChina") ;
@@ -74,9 +75,9 @@ public class ProcessInstanceInnerManagerImplTest {
 		ecpectObj.put("nextTaskName","BDM Leader Approve") ;
 
 		JSONArray executorArray = new JSONArray() ;
-		executorArray.add(3267);
+		executorArray.add(4736);
 		ecpectObj.put("nextExecutor",executorArray) ;
-
+		processInstanceInnerManager.setApplicationContext(context);
 		//execute
 		String result = processInstanceInnerManager.startProcess(keyInfo,obj.toString()) ;
 
@@ -86,7 +87,7 @@ public class ProcessInstanceInnerManagerImplTest {
 
 
 	@Test
-	public void testExecuteFirstTask() throws Exception {
+	public void testExecuteSecondTask() throws Exception {
 		/* @param processInstanceId
 				* @param taskId
 				* @param jsonValue
@@ -110,7 +111,7 @@ public class ProcessInstanceInnerManagerImplTest {
 					*  }
 		*/
 		//prepare data
-		Integer processInstanceId = 2 ;
+		Integer processInstanceId = 64 ;
 		//String taskId = "apply_travel" ;
 		JSONObject jsonObject = new JSONObject() ;
 		jsonObject.put("taskId","bdm_leader_approve") ;
@@ -121,8 +122,9 @@ public class ProcessInstanceInnerManagerImplTest {
 		JSONArray jsonArray = new JSONArray() ;
 		JSONObject columnJSON = new JSONObject() ;
 		columnJSON.put("columnId","TravelAmount") ;
-		columnJSON.put("columnValue","4000") ;
-		columnJSON.put("columnType","RMB") ;
+		columnJSON.put("columnValue","3500") ;
+		columnJSON.put("columnType","Currency") ;
+		columnJSON.put("CurrencyType","3") ;
 		jsonArray.add(columnJSON);
 		columnJSON = new JSONObject() ;
 		columnJSON.put("columnId","outOfChina") ;
@@ -134,14 +136,16 @@ public class ProcessInstanceInnerManagerImplTest {
 
 		// prepare expect data
 		JSONObject expectObj = new JSONObject() ;
-		expectObj.put("currentTaskId","apply_travel") ;
-		expectObj.put("currentTaskName","Apply Travel") ;
+		expectObj.put("currentTaskId","bdm_leader_approve") ;
+		expectObj.put("currentTaskName","BDM Leader Approve") ;
 		expectObj.put("nextTaskId","end") ;
 		expectObj.put("nextTaskName","end") ;
 
 		JSONArray executorArray = new JSONArray() ;
 		executorArray.add(3267);
 		expectObj.put("nextExecutor",executorArray) ;
+
+		//processInstanceInnerManager.setApplicationContext(context);
 
 		String jsonValue = jsonObject.toString() ;
 		String result = processInstanceInnerManager.executeTask( processInstanceId, jsonValue) ;

@@ -23,6 +23,7 @@ public interface ProcessDefinition {
 
     /**
      * add or edit process's Task one by one
+	 * if is the first task, will set the executor form process's startUserRole.
 	 * if return null, save or update failure.
 	 *
 	 * @param processKeyInfo it's the process two key info, processId and version

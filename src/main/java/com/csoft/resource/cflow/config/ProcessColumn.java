@@ -35,8 +35,8 @@ public class ProcessColumn {
             if(element.getAttributes().getNamedItem("value") != null){
                 processColumn.setValue(element.getAttributes().getNamedItem("value").getNodeValue());
             }
-            if(element.getAttributes().getNamedItem("valueType") != null){
-                columnValueTypeConstant = ColumnValueTypeConstant.constantByCode(element.getAttributes().getNamedItem("valueType").getNodeValue()) ;
+            if(element.getAttributes().getNamedItem("valueCondition") != null){
+                columnValueTypeConstant = ColumnValueTypeConstant.constantByCode(element.getAttributes().getNamedItem("valueCondition").getNodeValue()) ;
                 processColumn.setColumnValueTypeConstant(columnValueTypeConstant);
             }
         }

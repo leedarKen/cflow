@@ -25,6 +25,7 @@
     <context:component-scan base-package="com.csoft.resource.cflow.service"/>
     <context:component-scan base-package="com.csoft.resource.cflow.service.inner.entry.service"/>
     <context:component-scan base-package="com.csoft.resource.cflow.service.inner.business.service"/>
+    <context:component-scan base-package="com.csoft.resource.cflow.service.inner.business.service.executor"/>
 
     <tx:advice id="txAdvice">
         <tx:attributes>
@@ -37,5 +38,5 @@
         </tx:attributes>
     </tx:advice>
 
-
+    <bean id="SpringContextUtil" class="com.csoft.resource.cflow.context.SpringContextUtil"/>
 </beans>

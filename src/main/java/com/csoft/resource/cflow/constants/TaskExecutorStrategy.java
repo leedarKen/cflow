@@ -34,6 +34,15 @@ public enum TaskExecutorStrategy implements Constant {
 		public String desc() {
 			return "Assign";
 		}
+	},
+	Others{
+		public Integer code() {
+			return 14;
+		}
+
+		public String desc() {
+			return "Others";
+		}
 	};
 
 	public static TaskExecutorStrategy constantByCode(Integer code) {

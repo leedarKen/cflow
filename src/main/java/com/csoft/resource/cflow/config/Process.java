@@ -43,11 +43,17 @@ public class Process {
                 for (Map.Entry<String, ProcessColumn> columnEntry : processColumnMap.entrySet()) {
                     String id = columnEntry.getValue().getId();
                     if(processColumns.containsKey(id)){
+                        ProcessColumn processColumn = columnEntry.getValue() ;
+
                         ProcessColumn column = processColumns.get(id) ;
-                        column.setValue(columnEntry.getValue().getValue());
-                        column.setColumnValueTypeConstant(columnEntry.getValue().getColumnValueTypeConstant());
+                       // column.setValue(columnEntry.getValue().getValue());
+                       // column.setColumnValueTypeConstant(columnEntry.getValue().getColumnValueTypeConstant());
+
+                        processColumn.setColumnTypeConstant(column.getColumnTypeConstant());
+                        processColumn.setName(column.getName());
+
                         //columnEntry.getValue()  = column ;
-                        processColumnMap.put(id, column) ;
+                        processColumnMap.put(id, processColumn) ;
                     }
                 }
             }

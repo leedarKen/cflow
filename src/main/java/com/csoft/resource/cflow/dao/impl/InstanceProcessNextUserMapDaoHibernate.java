@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Repository("instanceProcessNextUserMapDao")
 public class InstanceProcessNextUserMapDaoHibernate
 		extends GenericDaoHibernate<InstanceProcessNextUserMap,Integer>
 		implements InstanceProcessNextUserMapDao {
@@ -26,5 +26,10 @@ public class InstanceProcessNextUserMapDaoHibernate
 		for(InstanceProcessNextUserMap userMap : userList){
 			session.delete(userMap);
 		}
+	}
+
+	public static void main(String[] args){
+
+
 	}
 }

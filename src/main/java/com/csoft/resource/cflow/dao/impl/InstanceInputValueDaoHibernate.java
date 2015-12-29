@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Repository("instanceInputValueDao")
 public class InstanceInputValueDaoHibernate
 		extends GenericDaoHibernate<InstanceInputValue, Integer>
 		implements InstanceInputValueDao {

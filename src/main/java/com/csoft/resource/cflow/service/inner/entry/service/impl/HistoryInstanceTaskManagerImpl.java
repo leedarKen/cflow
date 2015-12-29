@@ -6,11 +6,12 @@ import com.csoft.resource.cflow.service.inner.entry.service.HistoryInstanceTaskM
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("historyInstanceTaskManager")
 public class HistoryInstanceTaskManagerImpl
 		extends GenericManagerImpl<HistoryInstanceTask, Integer>
 		implements HistoryInstanceTaskManager {
 
+	@Autowired
 	private HistoryInstanceTaskDao historyInstanceTaskDao ;
 
 	@Autowired

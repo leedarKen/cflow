@@ -4,7 +4,7 @@ import com.csoft.resource.cflow.dao.HistoryInstanceTaskDao;
 import com.csoft.resource.cflow.pojo.HistoryInstanceTask;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository("historyInstanceTaskDao")
 public class HistoryInstanceTaskDaoHibernate
 		extends  GenericDaoHibernate<HistoryInstanceTask, Integer>
 		implements HistoryInstanceTaskDao {

@@ -90,8 +90,7 @@
 
         <xs:attribute name="id" type="xs:string"/>
         <xs:attribute name="value" type="xs:string"/>
-        <xs:attribute name="type" type="xs:string"/>
-        <xs:attribute name="valueType" type="ruleColumnType"/>
+        <xs:attribute name="valueCondition" type="valueConditionType"/>
     </xs:complexType>
     <xs:complexType name="triggerType">
          <xs:attribute name="ref" type="xs:string"/>
@@ -115,6 +114,7 @@
             <xs:enumeration value="Leader"/>
             <xs:enumeration value="Constant"/>
             <xs:enumeration value="Assign"/>
+            <xs:enumeration value="Others"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="columnType">
@@ -134,7 +134,7 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="ruleColumnType">
+    <xs:simpleType name="valueConditionType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Equal"/>
             <xs:enumeration value="Smaller"/>

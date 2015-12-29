@@ -45,30 +45,30 @@
             <ruleList>
                 <rule id="in_china_to_fiance">
                     <condition>
-                        <column id="action" value="approve" type="equal"/>
-                        <column id="TravelAmount" value="4000" type="smaller"/>
-                        <column id="outOfChina" value="False" type="equal"/>
+                        <column id="action" value="approve" valueCondition="equal"/>
+                        <column id="TravelAmount" value="4000" valueCondition="smaller"/>
+                        <column id="outOfChina" value="False" valueCondition="equal"/>
                     </condition>
                     <trigger ref="fiance_approve"/>
                 </rule>
                <rule id="out_china_to_manager">
                    <condition>
-                       <column id="action" value="approve" type="Equal"/>
-                       <column id="TravelAmount" value="4000" type="Smaller"/>
-                       <column id="outOfChina" value="True" type="Equal"/>
+                       <column id="action" value="approve" valueCondition="Equal"/>
+                       <column id="TravelAmount" value="4000" valueCondition="Smaller"/>
+                       <column id="outOfChina" value="True" valueCondition="Equal"/>
                    </condition>
                    <trigger ref="manager_approve"/>
                </rule>
                <rule id="greater_than_4000">
                    <condition>
-                       <column id="action" value="approve" type="Equal"/>
-                       <column id="TravelAmount" value="4000" type="Greater"/>
+                       <column id="action" value="approve" valueCondition="Equal"/>
+                       <column id="TravelAmount" value="4000" valueCondition="Greater"/>
                    </condition>
                    <trigger ref="manager_approve"/>
                </rule>
                <rule id="reject">
                 <condition>
-                    <column id="action" value="reject" type="equal"/>
+                    <column id="action" value="reject" valueCondition="equal"/>
                 </condition>
                 <trigger  ref="apply_travel"/>
             </rule>
@@ -85,13 +85,13 @@
             <ruleList>
                 <rule>
                     <condition>
-                        <column id="action" value="approve" type="equal"/>
+                        <column id="action" value="approve" valueCondition="equal"/>
                     </condition>
                     <trigger ref="admin_order"/>
                 </rule>
                 <rule>
                     <condition>
-                        <column id="action" value="reject" type="equal"/>
+                        <column id="action" value="reject" valueCondition="equal"/>
                     </condition>
                     <trigger ref="apply_travel"/>
                 </rule>
@@ -108,13 +108,13 @@
             <ruleList>
                 <rule>
                     <condition>
-                        <column id="action" value="approve" type="equal"/>
+                        <column id="action" value="approve" valueCondition="equal"/>
                     </condition>
                     <trigger ref="admin_order"/>
                 </rule>
                 <rule>
                     <condition>
-                        <column id="action" value="reject" type="equal"/>
+                        <column id="action" value="reject" valueCondition="equal"/>
                     </condition>
                     <trigger ref="apply_travel"/>
                 </rule>
@@ -129,13 +129,13 @@
             <ruleList>
                 <rule>
                     <condition>
-                        <column id="action" value="finish" type="equal"/>
+                        <column id="action" value="finish" valueCondition="equal"/>
                     </condition>
                     <trigger ref="end" />
                 </rule>
                 <rule>
                     <condition>
-                        <column id="action" value="cancel" type="equal"/>
+                        <column id="action" value="cancel" valueCondition="equal"/>
                     </condition>
                     <trigger  ref="apply_travel" />
                 </rule>

@@ -44,7 +44,6 @@ public enum ExecuteResultConstant implements Constant{
                 return executeResultConstant ;
             }
         }
-
         return null;
     }
 
