@@ -31,7 +31,7 @@ public class InstanceInputValueManagerImpl
 	}
 
     @Override
-    public void saveInputValue(InstanceProcess instanceProcess, JSONArray inputArray, Process process, ProcessInstanceInnerManagerImpl processInstanceInnerManager) {
+    public void saveInputValue(InstanceProcess instanceProcess, JSONArray inputArray, Process process) {
         if (inputArray != null) {
             for (int i = 0; i < inputArray.size(); i++) {
                 JSONObject obj = inputArray.getJSONObject(i);
