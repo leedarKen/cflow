@@ -3,6 +3,7 @@ package com.csoft.resource.cflow.service.inner.entry.service.impl;
 import com.csoft.resource.cflow.dao.CategoryDao;
 import com.csoft.resource.cflow.pojo.Category;
 import com.csoft.resource.cflow.service.inner.entry.service.CategoryManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,8 @@ import java.util.Map;
 public class CategoryManagerImpl
         extends GenericManagerImpl<Category, Integer>
         implements CategoryManager {
+
+    static Logger logger = Logger.getLogger(CategoryManager.class) ;
 
     @Autowired
     private CategoryDao categoryDao;
