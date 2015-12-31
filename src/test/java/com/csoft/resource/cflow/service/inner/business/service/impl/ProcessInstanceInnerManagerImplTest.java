@@ -1,5 +1,6 @@
 package com.csoft.resource.cflow.service.inner.business.service.impl;
 
+import com.csoft.resource.cflow.BaseJunit4Test;
 import com.csoft.resource.cflow.config.ProcessKeyInfo;
 import com.csoft.resource.cflow.service.inner.business.service.ProcessInstanceInnerManager;
 import net.sf.json.JSONArray;
@@ -13,7 +14,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import static org.junit.Assert.*;
 
 
-public class ProcessInstanceInnerManagerImplTest {
+public class ProcessInstanceInnerManagerImplTest{
 	@Autowired
 	private ProcessInstanceInnerManager processInstanceInnerManager;
 	ApplicationContext context ;
@@ -87,7 +88,7 @@ public class ProcessInstanceInnerManagerImplTest {
 
 
 	@Test
-	public void testExecuteSecondTask() throws Exception {
+	public void testExecuteSecondToEndTask() throws Exception {
 		/* @param processInstanceId
 				* @param taskId
 				* @param jsonValue
@@ -111,7 +112,7 @@ public class ProcessInstanceInnerManagerImplTest {
 					*  }
 		*/
 		//prepare data
-		Integer processInstanceId = 64 ;
+		Integer processInstanceId = 87 ;
 		//String taskId = "apply_travel" ;
 		JSONObject jsonObject = new JSONObject() ;
 		jsonObject.put("taskId","bdm_leader_approve") ;
@@ -138,11 +139,147 @@ public class ProcessInstanceInnerManagerImplTest {
 		JSONObject expectObj = new JSONObject() ;
 		expectObj.put("currentTaskId","bdm_leader_approve") ;
 		expectObj.put("currentTaskName","BDM Leader Approve") ;
-		expectObj.put("nextTaskId","end") ;
-		expectObj.put("nextTaskName","end") ;
+		//expectObj.put("nextTaskId","End") ;
+		expectObj.put("nextTaskName","End") ;
 
 		JSONArray executorArray = new JSONArray() ;
-		executorArray.add(3267);
+		//executorArray.add(3267);
+		expectObj.put("nextExecutor",executorArray) ;
+
+		//processInstanceInnerManager.setApplicationContext(context);
+
+		String jsonValue = jsonObject.toString() ;
+		String result = processInstanceInnerManager.executeTask( processInstanceId, jsonValue) ;
+
+		assertEquals(expectObj.toString(), result);
+	}
+
+	@Test
+	public void testExecuteSecondToManagerTask() throws Exception {
+		/* @param processInstanceId
+				* @param taskId
+				* @param jsonValue
+				* {
+				*     taskId:  taskId,
+		*     createTime:   createTime,
+		*     createUser:  createUser,
+		*     executeResult:{success|approve|reject|finish},
+		*     inputData:   [
+		*         {columnId:TravelAmount, columnValue:1000, columnType:String},
+		*     ]
+		* }
+		*
+		*  @return
+		*  {
+			*      currentTaskId:  currentTaskId,
+			*      currentTaskName:    currentTaskName,
+			*      nextTaskId: nextTaskId,
+			*      nextTaskName:   nextTaskName,
+			*      nextExecutor:   nextExecutor
+					*  }
+		*/
+		//prepare data
+		Integer processInstanceId = 88 ;
+		//String taskId = "apply_travel" ;
+		JSONObject jsonObject = new JSONObject() ;
+		jsonObject.put("taskId","bdm_leader_approve") ;
+		jsonObject.put("createTime","12/14/2015 12:00:00") ;
+		jsonObject.put("createUser",3267) ;
+		jsonObject.put("executeResult","Approve") ;
+
+		JSONArray jsonArray = new JSONArray() ;
+		JSONObject columnJSON = new JSONObject() ;
+		columnJSON.put("columnId","TravelAmount") ;
+		columnJSON.put("columnValue","4500") ;
+		columnJSON.put("columnType","Currency") ;
+		columnJSON.put("CurrencyType","3") ;
+		jsonArray.add(columnJSON);
+		columnJSON = new JSONObject() ;
+		columnJSON.put("columnId","outOfChina") ;
+		columnJSON.put("columnValue","False") ;
+		columnJSON.put("columnType","Boolean") ;
+		jsonArray.add(columnJSON) ;
+
+		jsonObject.put("inputData",jsonArray) ;
+
+		// prepare expect data
+		JSONObject expectObj = new JSONObject() ;
+		expectObj.put("currentTaskId","bdm_leader_approve") ;
+		expectObj.put("currentTaskName","BDM Leader Approve") ;
+		expectObj.put("nextTaskId","manager_approve") ;
+		expectObj.put("nextTaskName","Manager Approve") ;
+
+		JSONArray executorArray = new JSONArray() ;
+		executorArray.add(5237);
+		executorArray.add(2655);
+		expectObj.put("nextExecutor",executorArray) ;
+
+		//processInstanceInnerManager.setApplicationContext(context);
+
+		String jsonValue = jsonObject.toString() ;
+		String result = processInstanceInnerManager.executeTask( processInstanceId, jsonValue) ;
+
+		assertEquals(expectObj.toString(), result);
+	}
+
+	@Test
+	public void testExecuteSecondToOutOfChinaTask() throws Exception {
+		/* @param processInstanceId
+				* @param taskId
+				* @param jsonValue
+				* {
+				*     taskId:  taskId,
+		*     createTime:   createTime,
+		*     createUser:  createUser,
+		*     executeResult:{success|approve|reject|finish},
+		*     inputData:   [
+		*         {columnId:TravelAmount, columnValue:1000, columnType:String},
+		*     ]
+		* }
+		*
+		*  @return
+		*  {
+			*      currentTaskId:  currentTaskId,
+			*      currentTaskName:    currentTaskName,
+			*      nextTaskId: nextTaskId,
+			*      nextTaskName:   nextTaskName,
+			*      nextExecutor:   nextExecutor
+					*  }
+		*/
+		//prepare data
+		Integer processInstanceId = 89 ;
+		//String taskId = "apply_travel" ;
+		JSONObject jsonObject = new JSONObject() ;
+		jsonObject.put("taskId","bdm_leader_approve") ;
+		jsonObject.put("createTime","12/14/2015 12:00:00") ;
+		jsonObject.put("createUser",3267) ;
+		jsonObject.put("executeResult","Approve") ;
+
+		JSONArray jsonArray = new JSONArray() ;
+		JSONObject columnJSON = new JSONObject() ;
+		columnJSON.put("columnId","TravelAmount") ;
+		columnJSON.put("columnValue","3200") ;
+		columnJSON.put("columnType","Currency") ;
+		columnJSON.put("CurrencyType","3") ;
+		jsonArray.add(columnJSON);
+		columnJSON = new JSONObject() ;
+		columnJSON.put("columnId","outOfChina") ;
+		columnJSON.put("columnValue","True") ;
+		columnJSON.put("columnType","Boolean") ;
+		jsonArray.add(columnJSON) ;
+
+		jsonObject.put("inputData",jsonArray) ;
+
+		// prepare expect data
+		JSONObject expectObj = new JSONObject() ;
+		expectObj.put("currentTaskId","bdm_leader_approve") ;
+		expectObj.put("currentTaskName","BDM Leader Approve") ;
+		expectObj.put("nextTaskId","manager_approve") ;
+		expectObj.put("nextTaskName","Manager Approve") ;
+
+		JSONArray executorArray = new JSONArray() ;
+		executorArray.add(5237);
+		executorArray.add(2792);
 		expectObj.put("nextExecutor",executorArray) ;
 
 		//processInstanceInnerManager.setApplicationContext(context);
