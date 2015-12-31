@@ -14,6 +14,8 @@ public class InstanceProcess {
 	private Date startTime;
 	private Integer startUser;
 	private String currentTask;
+	private String nextTask;
+	private String processStatus ;
 	private Integer processType;
 
 	@Id
@@ -97,6 +99,24 @@ public class InstanceProcess {
 		this.processType = processType;
 	}
 
+	@Column(name = "next_task")
+	public String getNextTask() {
+		return nextTask;
+	}
+
+	public void setNextTask(String nextTask) {
+		this.nextTask = nextTask;
+	}
+
+	@Column(name = "process_status")
+	public String getProcessStatus() {
+		return processStatus;
+	}
+
+	public void setProcessStatus(String processStatus) {
+		this.processStatus = processStatus;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -111,6 +131,8 @@ public class InstanceProcess {
 		if (version != null ? ! version.equals(that.version) : that.version != null) return false;
 		if (startTime != null ? ! startTime.equals(that.startTime) : that.startTime != null) return false;
 		if (currentTask != null ? ! currentTask.equals(that.currentTask) : that.currentTask != null) return false;
+		if (nextTask != null ? ! nextTask.equals(that.nextTask) : that.nextTask != null) return false;
+		if (processStatus != null ? ! processStatus.equals(that.processStatus) : that.processStatus != null) return false;
 		if (processType != null ? ! processType.equals(that.processType) : that.processType != null) return false;
 
 		return true;
@@ -125,7 +147,11 @@ public class InstanceProcess {
 		result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
 		result = 31 * result + (startUser ^ (startUser >>> 32));
 		result = 31 * result + (currentTask != null ? currentTask.hashCode() : 0);
+		result = 31 * result + (nextTask != null ? nextTask.hashCode() : 0);
+		result = 31 * result + (processStatus != null ? processStatus.hashCode() : 0);
 		result = 31 * result + (processType != null ? processType.hashCode() : 0);
 		return result;
 	}
+
+
 }
