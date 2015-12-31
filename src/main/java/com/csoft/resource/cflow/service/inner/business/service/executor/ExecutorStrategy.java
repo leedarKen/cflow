@@ -6,9 +6,7 @@ import org.springframework.context.ApplicationContext;
 
 import java.util.List;
 
-/**
- * Created by ken.kang on 2015/12/21.
- */
+
 public interface ExecutorStrategy {
     List<Integer> executorList(ProcessTask task, JSONObject obj) ;
     public void setApplicationContext(ApplicationContext context) ;
