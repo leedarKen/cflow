@@ -10,5 +10,5 @@ public interface InstanceInputValueManager extends GenericManager<InstanceInputV
 
 	InstanceInputValue getInstanceInputValue(Integer instanceProcessId, String columnId) ;
 
-	void saveInputValue(InstanceProcess instanceProcess, JSONArray inputArray, Process process, ProcessInstanceInnerManagerImpl processInstanceInnerManager);
+	void saveInputValue(InstanceProcess instanceProcess, JSONArray inputArray, Process process);
 }
