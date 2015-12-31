@@ -5,5 +5,5 @@ import com.csoft.resource.cflow.pojo.InstanceProcess;
 
 public interface InstanceProcessManager extends GenericManager<InstanceProcess,Integer>{
 
-    void updateProcessInstanceCurrentTask(InstanceProcess processInstance, ProcessTask nextTask) ;
+    void updateProcessInstanceCurrentTask(InstanceProcess processInstance, ProcessTask currentTask,  ProcessTask nextTask) ;
 }
