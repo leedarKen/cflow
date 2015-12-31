@@ -31,23 +31,23 @@ import java.util.Map;
 @Service("processInstanceInnerManager")
 public class ProcessInstanceInnerManagerImpl implements ProcessInstanceInnerManager {
 
-    @Autowired
+
     private ProcessContext context = ProcessContextFactory.getProcessContext();
-
+    @Autowired
     private InstanceProcessManager instanceProcessManager;
-
+    @Autowired
     private InstanceProcessNextUserMapManager instanceProcessNextUserMapManager;
-
+    @Autowired
     private InstanceTaskManager instanceTaskManager;
-
+    @Autowired
     private InstanceInputValueManager instanceInputValueManager;
-
+    @Autowired
     private ProcessExecuotrManager processExecuotrManager;
-
+    @Autowired
     private CategoryManager categoryManager;
-
+    @Autowired
     private ExecutorContext executorContext;
-
+    @Autowired
     private ApplicationContext applicationContext;
 
     public ProcessInstanceInnerManagerImpl() {
@@ -112,6 +112,7 @@ public class ProcessInstanceInnerManagerImpl implements ProcessInstanceInnerMana
         instance.setCurrentTask(currentTask.getId());
         instance.setProcessName(process.getName());
         instance.setProcessType(1);
+        instance.setProcessStatus(Process.STATUS_BEGIN);
 
         InstanceProcess instanceProcess = instanceProcessManager.save(instance);
 
@@ -203,13 +204,13 @@ public class ProcessInstanceInnerManagerImpl implements ProcessInstanceInnerMana
         JSONArray userArray = new JSONArray();
 
         //update process
-        instanceProcessManager.updateProcessInstanceCurrentTask(processInstance, nextTask);
+        instanceProcessManager.updateProcessInstanceCurrentTask(processInstance, currentTask, nextTask);
 
         instanceTaskManager.saveInstanceTask(jsonObject, instanceProcess, process, currentTask);
 
 
         //insert into the input value
-        instanceInputValueManager.saveInputValue(instanceProcess, inputArray, process, this);
+        instanceInputValueManager.saveInputValue(instanceProcess, inputArray, process);
 
         //update next task task executor
         JSONObject executorJson = new JSONObject();
@@ -239,12 +240,17 @@ public class ProcessInstanceInnerManagerImpl implements ProcessInstanceInnerMana
         JSONObject result = new JSONObject();
         result.put("currentTaskId", currentTask.getId());
         result.put("currentTaskName", currentTask.getName());
-        result.put("nextTaskId", nextTask.getId());
-        result.put("nextTaskName", nextTask.getName());
+        if(nextTask instanceof ProcessEndTask){
+            //result.put("nextTaskId", nextTask.getId());
+            result.put("nextTaskName", nextTask.getName());
+        }else{
+            result.put("nextTaskId", nextTask.getId());
+            result.put("nextTaskName", nextTask.getName());
+        }
         if (userArray.size() > 0) {
             result.put("nextExecutor", userArray.toString());
         } else {
-            result.put("nextExecutor", "");
+            result.put("nextExecutor", userArray.toString());
         }
         return result.toString();
     }
@@ -416,11 +422,9 @@ public class ProcessInstanceInnerManagerImpl implements ProcessInstanceInnerMana
                     }
                 }
                 if (columnTypeConstant == ProcessColumnTypeConstant.Currency) {
-                    int resultValueInt = Integer.parseInt(resultValue);
-                    int configValueInt = Integer.parseInt(configValue);
 
                     if (columnValueTypeConstant == ColumnValueTypeConstant.Equal) {
-                        if (resultValueInt == configValueInt) {
+                        if (resultValue.compareTo(configValue) == 0 ) {
                             isPass = true;
                             continue;
                         } else {
@@ -429,7 +433,7 @@ public class ProcessInstanceInnerManagerImpl implements ProcessInstanceInnerMana
                         }
                     }
                     if (columnValueTypeConstant == ColumnValueTypeConstant.Greater) {
-                        if (resultValueInt > configValueInt) {
+                        if (resultValue.compareTo(configValue) > 0) {
                             isPass = true;
                             continue;
                         } else {
@@ -438,7 +442,7 @@ public class ProcessInstanceInnerManagerImpl implements ProcessInstanceInnerMana
                         }
                     }
                     if (columnValueTypeConstant == ColumnValueTypeConstant.Smaller) {
-                        if (resultValueInt < configValueInt) {
+                        if (resultValue.compareTo(configValue) < 0) {
                             isPass = true;
                             continue;
                         } else {
@@ -448,11 +452,9 @@ public class ProcessInstanceInnerManagerImpl implements ProcessInstanceInnerMana
                     }
                 }
                 if (columnTypeConstant == ProcessColumnTypeConstant.Number) {
-                    int resultValueInt = Integer.parseInt(resultValue);
-                    int configValueInt = Integer.parseInt(configValue);
 
                     if (columnValueTypeConstant == ColumnValueTypeConstant.Equal) {
-                        if (resultValueInt == configValueInt) {
+                        if (resultValue.compareTo(configValue) == 0) {
                             isPass = true;
                             continue;
                         } else {
@@ -461,7 +463,7 @@ public class ProcessInstanceInnerManagerImpl implements ProcessInstanceInnerMana
                         }
                     }
                     if (columnValueTypeConstant == ColumnValueTypeConstant.Greater) {
-                        if (resultValueInt > configValueInt) {
+                        if (resultValue.compareTo(configValue) > 0) {
                             isPass = true;
                             continue;
                         } else {
@@ -470,7 +472,7 @@ public class ProcessInstanceInnerManagerImpl implements ProcessInstanceInnerMana
                         }
                     }
                     if (columnValueTypeConstant == ColumnValueTypeConstant.Smaller) {
-                        if (resultValueInt < configValueInt) {
+                        if (resultValue.compareTo(configValue) < 0) {
                             isPass = true;
                             continue;
                         } else {
