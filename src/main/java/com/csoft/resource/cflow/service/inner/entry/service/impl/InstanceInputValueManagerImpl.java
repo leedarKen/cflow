@@ -35,15 +35,22 @@ public class InstanceInputValueManagerImpl
         if (inputArray != null) {
             for (int i = 0; i < inputArray.size(); i++) {
                 JSONObject obj = inputArray.getJSONObject(i);
-                InstanceInputValue input = new InstanceInputValue();
-                input.setCfKey(obj.getString("columnId"));
-                input.setCfValue(obj.getString("columnValue"));
-                input.setCfKeyType(obj.getString("columnType"));
-                input.setProcessId(process.getId());
-                input.setInstanceProcess(instanceProcess);
-                input.setProcessName(process.getName());
 
-                save(input);
+                //if exist in the database, update it
+                InstanceInputValue inputData = instanceInputValueDao.getInstanceInputValue(instanceProcess.getId(), obj.getString("columnId")) ;
+                if(inputData != null){
+                    inputData.setCfValue(obj.getString("columnValue"));
+                    update(inputData);
+                    continue;
+                }
+                inputData = new InstanceInputValue() ;
+                inputData.setCfKey(obj.getString("columnId"));
+                inputData.setCfValue(obj.getString("columnValue"));
+                inputData.setCfKeyType(obj.getString("columnType"));
+                inputData.setProcessId(process.getId());
+                inputData.setInstanceProcess(instanceProcess);
+                inputData.setProcessName(process.getName());
+                save(inputData);
             }
         }
     }
