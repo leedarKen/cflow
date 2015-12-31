@@ -9,6 +9,9 @@ import org.xml.sax.SAXException;
 import java.util.Map;
 
 public class Process {
+    public static final String STATUS_BEGIN = "Begin";
+    public static final String STATUS_END = "End";
+    public static final String STATUS_PROCESSING = "Processing";
     private String id;
     private String name;
     private String version;
