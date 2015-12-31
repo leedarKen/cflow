@@ -29,7 +29,7 @@ public class BDMTravelExecutorStrategyImpl implements ExecutorOthersStrategy {
         if (inputValue == null) {
             return executorList;
         }
-        if (Boolean.getBoolean(inputValue.getCfValue())) {
+        if (Boolean.parseBoolean(inputValue.getCfValue())) {
             //TODO 299 是wing
             //executorList.add(299);
             executorList.add(2792);
