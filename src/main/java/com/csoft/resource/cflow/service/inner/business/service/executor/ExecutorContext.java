@@ -4,6 +4,7 @@ import com.csoft.resource.cflow.config.ProcessTask;
 import com.csoft.resource.cflow.config.ProcessTaskExecutor;
 import com.csoft.resource.cflow.constants.TaskExecutorStrategy;
 import net.sf.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,8 @@ public class ExecutorContext {
 
 
     public List<Integer> executorList(ProcessTask task, JSONObject obj){
+
+
         //update next task task executor
         List<Integer> executorList = new ArrayList<Integer>() ;
         //get the next task's executor
@@ -36,6 +39,7 @@ public class ExecutorContext {
         }else{
             executorList.addAll(executor.getUserList()) ;
         }
+        executorStrategy.setApplicationContext(applicationContext);
         //executorStrategy.setApplicationContext(this.applicationContext);
         return executorStrategy.executorList(task, obj) ;
     }
