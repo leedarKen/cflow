@@ -73,13 +73,13 @@
                 <column id="action"/>
             </submit>
             <ruleList>
-                <rule>
+                <rule id="approveToend">
                     <condition>
                         <column id="action" value="Approve" valueCondition="Equal"/>
                     </condition>
                     <trigger ref="end"/>
                 </rule>
-                <rule>
+                <rule id="rejectToApply">
                     <condition>
                         <column id="action" value="Reject" valueCondition="Equal"/>
                     </condition>
