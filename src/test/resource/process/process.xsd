@@ -114,6 +114,7 @@
             <xs:enumeration value="Leader"/>
             <xs:enumeration value="Constant"/>
             <xs:enumeration value="Assign"/>
+            <xs:enumeration value="Creator"/>
             <xs:enumeration value="Others"/>
         </xs:restriction>
     </xs:simpleType>

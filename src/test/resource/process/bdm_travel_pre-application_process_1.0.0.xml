@@ -38,7 +38,7 @@
                 <rule id="in_china_to_end">
                     <condition>
                         <column id="action" value="Approve" valueCondition="Equal"/>
-                        <column id="TravelAmount" value="FromDataBase" valueCondition="Smaller" type="1"/>
+                        <column id="TravelAmount" value="FromDataBase" valueCondition="Smaller"/>
                         <column id="outOfChina" value="False" valueCondition="Equal"/>
                     </condition>
                     <trigger ref="end"/>
@@ -46,7 +46,6 @@
                <rule id="out_china_to_manager">
                    <condition>
                        <column id="action" value="Approve" valueCondition="Equal"/>
-                       <column id="TravelAmount" value="FromDataBase" valueCondition="Smaller"/>
                        <column id="outOfChina" value="True" valueCondition="Equal"/>
                    </condition>
                    <trigger ref="manager_approve"/>
@@ -73,13 +72,13 @@
                 <column id="action"/>
             </submit>
             <ruleList>
-                <rule>
+                <rule id="approveToend">
                     <condition>
                         <column id="action" value="Approve" valueCondition="Equal"/>
                     </condition>
                     <trigger ref="end"/>
                 </rule>
-                <rule>
+                <rule id="rejectToApply">
                     <condition>
                         <column id="action" value="Reject" valueCondition="Equal"/>
                     </condition>

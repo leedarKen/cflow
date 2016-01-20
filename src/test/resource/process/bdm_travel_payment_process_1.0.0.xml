@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<process id="bdm_travel" name="BDM Travel Process" version="1.0.0" startUserRole="BDM"
+<process id="bdm_travel_payment_process" name="BDM Travel Payment Process" version="1.0.0" startUserRole="BDM"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="process.xsd">
     <processForm>
@@ -18,7 +18,7 @@
             <ruleList>
                 <rule>
                     <condition>
-                        <column id="action" value="success" valueCondition="Equal"/>
+                        <column id="action" value="Success" valueCondition="Equal"/>
                     </condition>
                     <trigger ref="fiance_approve"/>
                 </rule>
@@ -30,15 +30,15 @@
                 <column id="action"/>
             </submit>
             <ruleList>
-                <rule>
+                <rule id="approveToEnd">
                     <condition>
-                        <column id="action" value="approve" valueCondition="Equal"/>
+                        <column id="action" value="Approve" valueCondition="Equal"/>
                     </condition>
                     <trigger ref="end"/>
                 </rule>
-                <rule>
+                <rule id="rejectToApply">
                     <condition>
-                        <column id="action" value="reject" valueCondition="Equal"/>
+                        <column id="action" value="Reject" valueCondition="Equal"/>
                     </condition>
                     <trigger ref="apply_travel_payment"/>
                 </rule>
