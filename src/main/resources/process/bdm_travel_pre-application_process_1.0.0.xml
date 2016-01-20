@@ -46,7 +46,6 @@
                <rule id="out_china_to_manager">
                    <condition>
                        <column id="action" value="Approve" valueCondition="Equal"/>
-                       <column id="TravelAmount" value="FromDataBase" valueCondition="Smaller"/>
                        <column id="outOfChina" value="True" valueCondition="Equal"/>
                    </condition>
                    <trigger ref="manager_approve"/>
